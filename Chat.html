@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b1d">
+  <title>AI Guidance | Sai Nakshatra</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at top, #202e67, transparent 55%),
+        linear-gradient(160deg, #070b1d, #101735, #050816);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid #ffffff15;
+    }
+
+    .logo {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .logo span {
+      color: #a5b4fc;
+    }
+
+    .back {
+      color: #c4b5fd;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .app {
+      max-width: 760px;
+      height: calc(100dvh - 75px);
+      min-height: 500px;
+      margin: 0 auto;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .heading {
+      text-align: center;
+      padding: 12px 0 18px;
+    }
+
+    .orb {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #aab6d0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .notice {
+      padding: 11px 13px;
+      border: 1px solid #a5b4fc30;
+      border-radius: 12px;
+      background: #a5b4fc08;
+      color: #cbd5e1;
+      font-size: 11px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .messages {
+      flex: 1;
+      min-height: 120px;
+      overflow-y: auto;
+      padding: 16px 3px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-top: 1px solid #ffffff12;
+      border-bottom: 1px solid #ffffff12;
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: 13px 15px;
+      border: 1px solid #ffffff18;
+      border-radius: 17px;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .assistant {
+      align-self: flex-start;
+      background: #ffffff0c;
+      border-top-left-radius: 5px;
+      color: #e2e8f0;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #a5b4fc20;
+      border-color: #a5b4fc40;
+      border-top-right-radius: 5px;
+    }
+
+    .suggestions {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 14px 0;
+    }
+
+    .suggestion {
+      flex-shrink: 0;
+      padding: 9px 12px;
+      border: 1px solid #a5b4fc50;
+      border-radius: 20px;
+      color: #dbeafe;
+      background: #ffffff08;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .composer {
+      display: flex;
+      gap: 9px;
+      padding-top: 8px;
+    }
+
+    textarea {
+      flex: 1;
+      min-width: 0;
+      max-height: 120px;
+      resize: vertical;
+      padding: 13px;
+      color: #fff;
+      background: #080d25;
+      border: 1px solid #ffffff25;
+      border-radius: 15px;
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #a5b4fc;
+    }
+
+    .send {
+      width: 52px;
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 15px;
+      color: #080d25;
+      background: linear-gradient(135deg, #c4b5fd, #93c5fd);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .send:disabled {
+      opacity: 0.5;
+    }
+
+    .footnote {
+      color: #8490ad;
+      font-size: 10px;
+      line-height: 1.6;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .app {
+        padding: 12px;
+        height: calc(100dvh - 65px);
+      }
+
+      .bubble {
+        max-width: 94%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="Index.html">🌟 Sai <span>Nakshatra</span></a>
+    <a class="back" href="Result.html">← Results</a>
+  </header>
+
+  <main class="app">
+    <section class="heading">
+      <div class="orb">🌌</div>
+      <h1>Your Guidance Space</h1>
+      <p class="subtitle">
+        Ask a question, reflect on your goals, or explore a new perspective.
+      </p>
+    </section>
+
+    <div class="notice">
+      Demo mode: this page does not connect to an AI model yet.
+      Messages stay in this page and are not sent to an AI service.
+    </div>
+
+    <section
+      class="messages"
+      id="messages"
+      aria-live="polite"
+      aria-label="Chat messages"
+    >
+      <div class="bubble assistant">
+        Welcome to Sai Nakshatra ✨
+
+        I'm your demo guidance assistant. Try one of the prompts below!
+      </div>
+    </section>
+
+    <div class="suggestions">
+      <button class="suggestion" type="button"
+        data-prompt="Help me set a goal for this week.">
+        🎯 My goals
+      </button>
+      <button class="suggestion" type="button"
+        data-prompt="Give me a positive reflection for today.">
+        ✨ Daily reflection
+      </button>
+      <button class="suggestion" type="button"
+        data-prompt="How can I make a thoughtful decision?">
+        🌙 Decision guidance
+      </button>
+    </div>
+
+    <form class="composer" id="chatForm">
+      <textarea
+        id="userInput"
+        rows="1"
+        maxlength="1000"
+        placeholder="Write your question..."
+        aria-label="Your message"
+        required
+      ></textarea>
+      <button class="send" type="submit" aria-label="Send message">
+        ↑
+      </button>
+    </form>
+
+    <p class="footnote">
+      AI connection coming later. Astrology is for reflection and entertainment,
+      not a guarantee of future events.
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("userInput");
+    const messages = document.getElementById("messages");
+
+    function addMessage(text, role) {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble " + role;
+      bubble.textContent = text;
+      messages.appendChild(bubble);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendDemoMessage(text) {
+      const message = text.trim();
+
+      if (!message) return;
+
+      addMessage(message, "user");
+      input.value = "";
+
+      addMessage(
+        "Thanks for sharing that. This is currently a demo, so I can't generate a personalised AI answer yet. Try breaking your question into smaller steps, consider your options, and remember that you make your own decisions. Our real AI connection will come in a later stage.",
+        "assistant"
+      );
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      sendDemoMessage(input.value);
+    });
+
+    document.querySelectorAll(".suggestion").forEach(function(button) {
+      button.addEventListener("click", function() {
+        sendDemoMessage(button.dataset.prompt);
+      });
+    });
+  </script>
+</body>
+</html>
