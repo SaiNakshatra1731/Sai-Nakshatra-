@@ -7,27 +7,164 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const { birthDate, birthTime, birthPlace } = req.body || {};
+  try {
+    const { birthDate, birthTime, birthPlace } = req.body || {};
 
-  if (
-    typeof birthDate !== "string" ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(birthDate) ||
-    typeof birthTime !== "string" ||
-    !/^([01]\d|2[0-3]):[0-5]\d$/.test(birthTime) ||
-    typeof birthPlace !== "string" ||
-    birthPlace.trim().length < 2
-  ) {
-    return res.status(400).json({
+    if (
+      typeof birthDate !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(birthDate) ||
+      typeof birthTime !== "string" ||
+      !/^([01]\d|2[0-3]):[0-5]\d$/.test(birthTime) ||
+      typeof birthPlace !== "string" ||
+      birthPlace.trim().length < 2
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide a valid birth date, time, and place."
+      });
+    }
+
+    const apiKey = process.env.NAVAMSHA_API_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({
+        success: false,
+        error: "The astrology API key is not configured."
+      });
+    }
+
+    // Find the birthplace coordinates and timezone.
+    const geoUrl = new URL(
+      "https://geocoding-api.open-meteo.com/v1/search"
+    );
+
+    geoUrl.searchParams.set("name", birthPlace.trim());
+    geoUrl.searchParams.set("count", "1");
+    geoUrl.searchParams.set("language", "en");
+    geoUrl.searchParams.set("format", "json");
+
+    const geoResponse = await fetch(geoUrl);
+
+    if (!geoResponse.ok) {
+      throw new Error("Birthplace lookup failed.");
+    }
+
+    const geoData = await geoResponse.json();
+    const place = geoData.results?.[0];
+
+    if (
+      !place ||
+      typeof place.latitude !== "number" ||
+      typeof place.longitude !== "number" ||
+      !place.timezone
+    ) {
+      return res.status(400).json({
+        success: false,
+        error:
+          "Birthplace not found. Please enter a city or town name."
+      });
+    }
+
+    // Convert the local birth time into the correct UTC offset.
+    const [year, month, day] = birthDate.split("-").map(Number);
+    const [hours, minutes] = birthTime.split(":").map(Number);
+
+    const localAsUTC = Date.UTC(
+      year, month - 1, day, hours, minutes
+    );
+
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone: place.timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23"
+    });
+
+    let utcGuess = localAsUTC;
+
+    for (let i = 0; i < 3; i++) {
+      const parts = Object.fromEntries(
+        formatter.formatToParts(new Date(utcGuess))
+          .filter(part => part.type !== "literal")
+          .map(part => [part.type, Number(part.value)])
+      );
+
+      const displayedAsUTC = Date.UTC(
+        parts.year,
+        parts.month - 1,
+        parts.day,
+        parts.hour,
+        parts.minute
+      );
+
+      utcGuess = localAsUTC - (displayedAsUTC - utcGuess);
+    }
+
+    const timezoneOffset =
+      (localAsUTC - utcGuess) / 3600000;
+
+    // Request the actual Vedic birth chart.
+    const astrologyResponse = await fetch(
+      "https://api.navamsha.in/api/v1/kundali/basic",
+      {
+        method: "POST",
+        headers: {
+          "X-API-Key": apiKey,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          year,
+          month,
+          date: day,
+          hours,
+          minutes,
+          latitude: place.latitude,
+          longitude: place.longitude,
+          timezone: timezoneOffset
+        })
+      }
+    );
+
+    const astrologyData = await astrologyResponse.json();
+
+    if (
+      !astrologyResponse.ok ||
+      !astrologyData.output?.planets?.Moon
+    ) {
+      console.error(
+        "Navamsha API returned an unsuccessful response:",
+        astrologyResponse.status
+      );
+
+      return res.status(502).json({
+        success: false,
+        error:
+          "The astrology provider could not calculate this chart. Please try again."
+      });
+    }
+
+    const moon = astrologyData.output.planets.Moon;
+
+    return res.status(200).json({
+      success: true,
+      rashi: moon.zodiac_sign_name,
+      nakshatra: moon.nakshatra_name,
+      pada: moon.nakshatra_pada,
+      output: astrologyData.output
+    });
+
+  } catch (error) {
+    console.error("Astrology calculation error:", error.message);
+
+    return res.status(500).json({
       success: false,
-      error: "Please provide a valid birth date, time, and place."
+      error:
+        "Unable to calculate the birth chart right now. Please try again."
     });
   }
-
-  return res.status(501).json({
-    success: false,
-    status: "calculation_not_connected",
-    message:
-      "Birth details were received, but the astronomical calculation source is not connected yet."
-  });
 };
+
   
