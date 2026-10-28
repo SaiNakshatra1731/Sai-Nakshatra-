@@ -1,0 +1,33 @@
+
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      success: false,
+      error: "Use POST to submit birth details."
+    });
+  }
+
+  const { birthDate, birthTime, birthPlace } = req.body || {};
+
+  if (
+    typeof birthDate !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(birthDate) ||
+    typeof birthTime !== "string" ||
+    !/^([01]\d|2[0-3]):[0-5]\d$/.test(birthTime) ||
+    typeof birthPlace !== "string" ||
+    birthPlace.trim().length < 2
+  ) {
+    return res.status(400).json({
+      success: false,
+      error: "Please provide a valid birth date, time, and place."
+    });
+  }
+
+  return res.status(501).json({
+    success: false,
+    status: "calculation_not_connected",
+    message:
+      "Birth details were received, but the astronomical calculation source is not connected yet."
+  });
+};
+  
