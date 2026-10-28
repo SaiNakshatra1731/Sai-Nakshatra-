@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b1d">
+  <title>Sai Nakshatra | Your Direction for Tomorrow</title>
+  <meta name="description" content="Explore your possibilities and discover your direction with Sai Nakshatra.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      background:
+        radial-gradient(ellipse at 50% 0%, #202e67 0%, transparent 55%),
+        linear-gradient(160deg, #070b1d, #101735 60%, #050816);
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.7;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, white 99%, transparent),
+        radial-gradient(1px 1px at 70% 20%, white 99%, transparent),
+        radial-gradient(2px 2px at 85% 65%, white 99%, transparent),
+        radial-gradient(1px 1px at 40% 80%, white 99%, transparent),
+        radial-gradient(1px 1px at 10% 70%, white 99%, transparent);
+      background-size: 230px 210px;
+    }
+
+    header {
+      padding: 24px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ffffff12;
+    }
+
+    .logo {
+      font-size: 19px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      color: #a5b4fc;
+    }
+
+    .status {
+      font-size: 12px;
+      color: #c4b5fd;
+      border: 1px solid #a5b4fc55;
+      padding: 8px 12px;
+      border-radius: 30px;
+    }
+
+    main {
+      position: relative;
+      min-height: 78vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 65px 22px;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 720px;
+      padding: 42px 24px;
+      border: 1px solid #ffffff20;
+      border-radius: 26px;
+      background: #ffffff08;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 80px #00000030;
+    }
+
+    .eyebrow {
+      color: #c4b5fd;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 65px);
+      line-height: 1.1;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      color: #a5b4fc;
+    }
+
+    .description {
+      color: #cbd5e1;
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 510px;
+      margin: 0 auto 30px;
+    }
+
+    .cta {
+      display: inline-block;
+      text-decoration: none;
+      color: #080d25;
+      background: linear-gradient(110deg, #c4b5fd, #93c5fd);
+      font-weight: bold;
+      padding: 15px 28px;
+      border-radius: 30px;
+      transition: transform 0.2s;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .note {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-top: 22px;
+    }
+
+    .features {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 900px;
+      padding: 0 22px 60px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      padding: 22px 15px;
+      text-align: center;
+      border: 1px solid #ffffff15;
+      background: #ffffff07;
+      border-radius: 18px;
+    }
+
+    .feature .symbol {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .feature h2 {
+      font-size: 16px;
+      margin-bottom: 9px;
+    }
+
+    .feature p {
+      color: #aab6d0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      position: relative;
+      text-align: center;
+      padding: 25px 15px;
+      color: #8490ad;
+      font-size: 12px;
+      border-top: 1px solid #ffffff10;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 20px;
+      }
+
+      .logo {
+        font-size: 16px;
+      }
+
+      .hero {
+        padding: 35px 20px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+
+  <header>
+    <div class="logo">🌟 Sai <span>Nakshatra</span></div>
+    <div class="status">✦ Your journey begins</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Discover • Reflect • Prepare</p>
+
+      <h1>Your Future.<br><span>Your Direction.</span></h1>
+
+      <p class="description">
+        Explore your possibilities, discover meaningful insights,
+        and prepare for tomorrow with Sai Nakshatra.
+      </p>
+
+      <a class="cta" href="Plan.html">Begin Your Journey ✨</a>
+
+      <p class="note">
+        A space for reflection, self-discovery and new possibilities.
+      </p>
+    </section>
+  </main>
+
+  <section class="features">
+    <article class="feature">
+      <div class="symbol">🌙</div>
+      <h2>Guidance</h2>
+      <p>Explore astrological insights and reflect on your journey.</p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">✨</div>
+      <h2>Explore</h2>
+      <p>Discover new perspectives and possibilities.</p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">🌌</div>
+      <h2>Prepare</h2>
+      <p>Look ahead thoughtfully while making your own choices.</p>
+    </article>
+  </section>
+
+  <footer>
+    © 2026 Sai Nakshatra · Your Direction for Tomorrow
+  </footer>
+</body>
+  </html>
+  
