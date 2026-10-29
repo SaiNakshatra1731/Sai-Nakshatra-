@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b20">
+  <title>Your Results | Sai Nakshatra</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      color: #f7f7ff;
+      font-family: system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse at top, #20265a, transparent 65%),
+        #080b20;
+    }
+
+    main {
+      width: min(100%, 540px);
+      padding: 30px 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 24px;
+      background: rgba(20,27,61,.85);
+    }
+
+    .symbol { font-size: 48px; }
+
+    h1 { color: #f5d58b; }
+
+    p {
+      color: #b5bfdc;
+      line-height: 1.7;
+    }
+
+    .result {
+      margin-top: 24px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      text-align: left;
+    }
+
+    .result strong { color: #f5d58b; }
+
+    a {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      color: #17162a;
+      background: #f5d58b;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="symbol" aria-hidden="true">🌌</div>
+    <h1>Your Cosmic Profile</h1>
+    <p id="status">
+      Your birth details and verified astrology calculations
+      will appear here once the calculation engine is connected.
+    </p>
+
+    <div class="result">
+      <p><strong>Rashi:</strong> Not calculated yet</p>
+      <p><strong>Nakshatra:</strong> Not calculated yet</p>
+      <p><strong>Pada:</strong> Not calculated yet</p>
+    </div>
+
+    <a href="index.html">← Return to Homepage</a>
+  </main>
+</body>
+</html>
