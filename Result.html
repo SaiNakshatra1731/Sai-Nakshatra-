@@ -284,7 +284,9 @@
   <script>
     const statusBox = document.getElementById("status");
     const summary = document.getElementById("birthSummary");
-
+const details = JSON.parse(
+  sessionStorage.getItem("saiNakshatraBirthDetails") || "null"
+);
     function showStatus(message) {
       statusBox.textContent = message;
     }
