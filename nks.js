@@ -113,7 +113,9 @@ function lookupFromBirthDateTimeUtc(birthDateTimeUtc) {
       record.moon_sidereal_longitude_deg
   };
 }
-
+if (typeof window !== "undefined") {
+  window.SaiNakshatraLookup = { lookupFromBirthDateTimeUtc };
+  }
 module.exports = {
   calculateFromMoonLongitude,
   lookupFromBirthDateTimeUtc
