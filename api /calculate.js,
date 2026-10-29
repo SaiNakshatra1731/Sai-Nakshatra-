@@ -1,5 +1,4 @@
 
-const SaiNakshatraEngine = require("../astrology-engine.js");
 const Nks = require("../nks.js");
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
