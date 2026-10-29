@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b20">
+  <title>Choose Your Plan | Sai Nakshatra</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --gold: #f5d58b;
+      --muted: #b5bfdc;
+      --border: rgba(255,255,255,.14);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px 16px;
+      color: #f7f7ff;
+      font-family: system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse at top, #20265a, transparent 60%),
+        #080b20;
+    }
+
+    .container {
+      width: min(1050px, 100%);
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 55px;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .back { color: var(--muted); font-size: .9rem; }
+
+    .heading { text-align: center; margin-bottom: 35px; }
+
+    .heading h1 {
+      font-size: clamp(2rem, 6vw, 3.3rem);
+      margin: 0 0 12px;
+    }
+
+    .heading h1 span { color: var(--gold); }
+
+    .heading p {
+      max-width: 580px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .plan {
+      display: flex;
+      flex-direction: column;
+      padding: 26px 21px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(20,27,61,.8);
+    }
+
+    .plan.featured {
+      border-color: rgba(245,213,139,.7);
+      box-shadow: 0 0 30px rgba(245,213,139,.08);
+    }
+
+    .tag {
+      color: var(--gold);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h2 { margin: 10px 0 4px; }
+
+    .price {
+      margin: 12px 0;
+      font-size: 2.4rem;
+      font-weight: 850;
+    }
+
+    .price small {
+      font-size: .9rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .description {
+      min-height: 52px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 16px 0 24px;
+      color: #e4e8fa;
+      line-height: 2;
+      font-size: .9rem;
+    }
+
+    .choose {
+      display: block;
+      width: 100%;
+      margin-top: auto;
+      padding: 13px 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      color: #fff;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .featured .choose {
+      color: #17162a;
+      background: var(--gold);
+      border-color: transparent;
+    }
+
+    .notice {
+      margin: 28px auto;
+      max-width: 720px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .83rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 22px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    @media (max-width: 760px) {
+      .plans { grid-template-columns: 1fr; }
+      .description { min-height: auto; }
+      header { margin-bottom: 38px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <a class="brand" href="index.html">🌟 Sai Nakshatra</a>
+      <a class="back" href="index.html">← Homepage</a>
+    </header>
+
+    <section class="heading">
+      <h1>Choose Your <span>Experience</span></h1>
+      <p>
+        Choose the level of exploration that suits you.
+        Start small and move forward at your own pace.
+      </p>
+    </section>
+
+    <section class="plans" aria-label="Available plans">
+      <article class="plan">
+        <div class="tag">Start here</div>
+        <h2>Starter</h2>
+        <div class="price">₹1</div>
+        <p class="description">A quick introductory experience.</p>
+        <ul>
+          <li>Basic birth details</li>
+          <li>Core astrology results when available</li>
+          <li>Simple interpretation</li>
+        </ul>
+        <button class="choose" data-plan="Starter" data-price="1">
+          Choose Starter
+        </button>
+      </article>
+
+      <article class="plan featured">
+        <div class="tag">More to explore</div>
+        <h2>Explorer</h2>
+        <div class="price">₹19</div>
+        <p class="description">A more detailed astrology experience.</p>
+        <ul>
+          <li>Core birth-chart details</li>
+          <li>Expanded interpretations</li>
+          <li>More topics to explore</li>
+        </ul>
+        <button class="choose" data-plan="Explorer" data-price="19">
+          Choose Explorer
+        </button>
+      </article>
+
+      <article class="plan">
+        <div class="tag">Extended</div>
+        <h2>Premium</h2>
+        <div class="price">₹49</div>
+        <p class="description">An extended experience for deeper exploration.</p>
+        <ul>
+          <li>Detailed birth-chart overview</li>
+          <li>Expanded guidance topics</li>
+          <li>Extended interpretation</li>
+        </ul>
+        <button class="choose" data-plan="Premium" data-price="49">
+          Choose Premium
+        </button>
+      </article>
+    </section>
+
+    <p class="notice">
+      These are proposed plans for our prototype. Payment processing
+      is not connected, and listed features are not all implemented yet.
+      Astrology interpretations are traditional beliefs, not guaranteed
+      predictions of future events.
+    </p>
+
+    <footer>
+      🌌 Sai Nakshatra · Your Direction for Tomorrow
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll("[data-plan]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const plan = button.dataset.plan;
+        const price = button.dataset.price;
+
+        const params = new URLSearchParams({ plan, price });
+        window.location.href = "birth-details.html?" + params.toString();
+      });
+    });
+  </script>
+</body>
+  </html>
+  
