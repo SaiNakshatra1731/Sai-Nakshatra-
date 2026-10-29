@@ -1,16 +1,4 @@
 
-/*
- * Sai Nakshatra — Astrology Engine
- * Version 1.0
- *
- * This module validates birth details and interprets
- * a supplied sidereal Moon longitude.
- *
- * IMPORTANT:
- * The longitude must come from a reliable astronomical
- * calculation source. This file does not calculate it yet.
- */
-
 const SaiNakshatraEngine = (() => {
   "use strict";
 
@@ -65,7 +53,7 @@ const SaiNakshatraEngine = (() => {
       Number.isNaN(date.getTime()) ||
       date.toISOString().slice(0, 10) !== birthDate
     ) {
-      throw new Error("The birth date is not valid.");
+      throw new Error("The birth date is invalid.");
     }
 
     if (
@@ -96,9 +84,7 @@ const SaiNakshatraEngine = (() => {
       longitude < 0 ||
       longitude >= 360
     ) {
-      throw new Error(
-        "Moon longitude must be a number from 0 up to, but not including, 360."
-      );
+      throw new Error("Invalid sidereal Moon longitude.");
     }
 
     const signIndex = Math.floor(longitude / 30);
@@ -109,26 +95,46 @@ const SaiNakshatraEngine = (() => {
     const positionInNakshatra =
       longitude - nakshatraIndex * NAKSHATRA_SPAN;
 
-    const pada = Math.floor(
-      positionInNakshatra / PADA_SPAN
-    ) + 1;
+    const pada =
+      Math.floor(positionInNakshatra / PADA_SPAN) + 1;
 
     return {
       rashi: SIGNS[signIndex],
       nakshatra: NAKSHATRAS[nakshatraIndex],
       pada,
-      siderealMoonLongitude: longitude,
-      status: "Calculated from supplied longitude"
+      siderealMoonLongitude: longitude
     };
+  }
+
+  async function calculateRealAstrology(birthDetails) {
+    const details = validateBirthDetails(birthDetails);
+
+    const response = await fetch("/api/calculate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(details)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.success === false) {
+      throw new Error(
+        result.error || "Astrology calculation failed."
+      );
+    }
+
+    return result;
   }
 
   return Object.freeze({
     validateBirthDetails,
-    calculateFromMoonLongitude
+    calculateFromMoonLongitude,
+    calculateRealAstrology
   });
 })();
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = SaiNakshatraEngine;
-  }
-      
+}
