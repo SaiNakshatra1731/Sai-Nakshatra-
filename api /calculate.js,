@@ -194,9 +194,9 @@ module.exports = async function handler(req, res) {
         ? moon.fullDegree
         : signStart + moon.normDegree;
 
-    // Connect the real Moon position to our existing engine.
-    const calculated =
-      SaiNakshatraEngine.calculateFromMoonLongitude(moonLongitude);
+    // Calculate using our nks.js module.
+const calculated =
+  Nks.calculateFromMoonLongitude(moonLongitude);
 
     return res.status(200).json({
       success: true,
