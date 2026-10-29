@@ -1,0 +1,267 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b20">
+  <title>Birth Details | Sai Nakshatra</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --gold: #f5d58b;
+      --muted: #b5bfdc;
+      --border: rgba(255,255,255,.14);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: grid;
+      place-items: center;
+      color: #f7f7ff;
+      font-family: system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse at top, #20265a, transparent 60%),
+        #080b20;
+    }
+
+    main {
+      width: min(100%, 520px);
+      padding: 28px 22px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(20,27,61,.86);
+      box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    }
+
+    .brand {
+      color: var(--gold);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 14px 0 8px;
+      text-align: center;
+      font-size: clamp(1.8rem, 6vw, 2.3rem);
+    }
+
+    .intro {
+      margin: 0 0 24px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .plan {
+      padding: 12px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(245,213,139,.3);
+      border-radius: 12px;
+      color: var(--gold);
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 17px 0 7px;
+      font-size: .92rem;
+      font-weight: 650;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px;
+      color: white;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font: inherit;
+      color-scheme: dark;
+    }
+
+    input:focus {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    button, .back {
+      display: flex;
+      width: 100%;
+      min-height: 48px;
+      margin-top: 20px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    button {
+      border: 0;
+      color: #17162a;
+      background: linear-gradient(135deg, #f8e5ad, #e7bd69);
+      cursor: pointer;
+    }
+
+    .back {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .message {
+      margin-top: 16px;
+      color: var(--gold);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .privacy {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="brand">🌟 Sai Nakshatra</div>
+
+    <h1>Your Birth Details</h1>
+
+    <p class="intro">
+      Enter your birth information to prepare your
+      personalized astrology experience.
+    </p>
+
+    <div class="plan" id="selectedPlan">
+      Selected plan: Loading...
+    </div>
+
+    <form id="birthForm">
+      <label for="birthDate">Date of birth</label>
+      <input
+        id="birthDate"
+        name="birthDate"
+        type="date"
+        required
+      >
+
+      <label for="birthTime">Time of birth</label>
+      <input
+        id="birthTime"
+        name="birthTime"
+        type="time"
+        required
+      >
+
+      <label for="birthPlace">Birthplace (city or town)</label>
+      <input
+        id="birthPlace"
+        name="birthPlace"
+        type="text"
+        maxlength="100"
+        placeholder="e.g. Ranchi, Jharkhand, India"
+        autocomplete="off"
+        required
+      >
+
+      <button type="submit">Continue to Results ✨</button>
+
+      <p id="message" class="message" role="status" hidden></p>
+    </form>
+
+    <a class="back" href="plan.html">← Back to Plans</a>
+
+    <p class="privacy">
+      This prototype keeps your birth details in this browser session.
+      They are not sent to a server by this page. Avoid entering
+      personal information on a shared device.
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById("birthForm");
+    const message = document.getElementById("message");
+    const selectedPlan = document.getElementById("selectedPlan");
+
+    const params = new URLSearchParams(window.location.search);
+
+    const allowedPlans = {
+      Starter: "1",
+      Explorer: "19",
+      Premium: "49"
+    };
+
+    const requestedPlan = params.get("plan");
+    const requestedPrice = params.get("price");
+
+    const plan = allowedPlans[requestedPlan] === requestedPrice
+      ? requestedPlan
+      : "Starter";
+
+    const price = allowedPlans[plan];
+
+    selectedPlan.textContent = `Selected plan: ${plan} — ₹${price}`;
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const birthDate = document.getElementById("birthDate").value;
+      const birthTime = document.getElementById("birthTime").value;
+      const birthPlace = document.getElementById("birthPlace").value.trim();
+
+      if (!birthDate || !birthTime || !birthPlace) {
+        message.hidden = false;
+        message.textContent = "Please complete all three fields.";
+        return;
+      }
+
+      const date = new Date(birthDate + "T00:00:00Z");
+
+      if (
+        Number.isNaN(date.getTime()) ||
+        date.toISOString().slice(0, 10) !== birthDate ||
+        date.getUTCFullYear() < 1800 ||
+        date.getUTCFullYear() > new Date().getFullYear()
+      ) {
+        message.hidden = false;
+        message.textContent = "Please enter a valid birth date.";
+        return;
+      }
+
+      const details = {
+        birthDate,
+        birthTime,
+        birthPlace,
+        plan,
+        price
+      };
+
+      try {
+        sessionStorage.setItem(
+          "saiNakshatraBirthDetails",
+          JSON.stringify(details)
+        );
+
+        window.location.href = "result.html";
+      } catch (error) {
+        message.hidden = false;
+        message.textContent =
+          "Your browser could not save the details. Please try again.";
+      }
+    });
+  </script>
+</body>
+  </html>
+  
